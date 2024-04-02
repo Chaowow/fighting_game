@@ -6,7 +6,7 @@ canvas.height = 576;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const gravity = 0.7;
+const gravity = 0.9;
 
 class Sprite {
     constructor({ position, velocity, color = 'red', offset }) {
@@ -126,8 +126,36 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
         rectangle1.attackBox.position.y + rectangle1.attackBox.height >= 
         rectangle2.position.y && 
         rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
-    )
+    );
 }
+
+function determindWinner({ player, enemy, timeId }) {
+    clearTimeout(timeId);
+    document.querySelector('#displayText').style.display = 'flex';
+    if (player.health === enemy.health) {
+        document.querySelector('#displayText').innerHTML = 'DRAW';
+    } else if (player.health > enemy.health) {
+        document.querySelector('#displayText').innerHTML = 'PLAYER 1 WINS';
+    } else if (player.health < enemy.health) {
+        document.querySelector('#displayText').innerHTML = 'PLAYER 2 WINS';
+    }
+}
+
+let timer = 60;
+let timeId;
+function countdown() {
+    if (timer > 0) {
+        timeId = setTimeout(countdown, 1000);
+        timer--;
+        document.querySelector('#timer').innerHTML = timer;
+    }
+    if (timer === 0) {
+        document.querySelector('#displayText').style.display = 'flex';
+        determindWinner({ player, enemy, timeId });
+    }
+}
+
+countdown();
 
 function animate() {
     window.requestAnimationFrame(animate);
@@ -175,6 +203,11 @@ function animate() {
             player.health -= 10;
             document.querySelector('#playerHealth').style.width = player.health + '%';
         }
+
+    // end game based on health
+    if (enemy.health <= 0 || player.health <= 0) {
+        determindWinner({ player, enemy, timeId });
+    }
 }
 
 animate();
@@ -209,8 +242,7 @@ window.addEventListener('keydown', (event) => {
             break
         case 'ArrowDown':
             enemy.attack();
-            break
-            
+            break    
     }
 
 });
