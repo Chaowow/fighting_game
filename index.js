@@ -29,12 +29,22 @@ const player = new Fighter({
         x: 0,
         y: 0
     },
-    imageSrc: './img/conqueror/Char_4_Idle.png',
-    framesMax: 1,
-    scale: 3.5,
+    imageSrc: './img/crow/crow_idle.png',
+    framesMax: 4,
+    scale: 6,
     offset: {
-        x: 0,
-        y: 38
+        x: 10,
+        y: 130
+    },
+    sprites: {
+        idle: {
+            imageSrc: './img/crow/crow_idle.png',
+            framesMax: 4
+        },
+        run: {
+            imageSrc: './img/crow/crow_walk.png',
+            framesMax: 4,
+        }
     }
 });
 
@@ -85,12 +95,17 @@ function animate() {
     player.velocity.x = 0;
     enemy.velocity.x = 0;
 
+    // player movement
+    player.image = player.sprites.idle.image;
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5;
+        player.image = player.sprites.run.image;
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5;
+        player.image = player.sprites.run.image;
     }
 
+    // enemy movement
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
         enemy.velocity.x = -5;
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
