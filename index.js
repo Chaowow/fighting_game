@@ -28,6 +28,13 @@ const player = new Fighter({
     offset: {
         x: 0,
         y: 0
+    },
+    imageSrc: './img/conqueror/Char_4_Idle.png',
+    framesMax: 1,
+    scale: 3.5,
+    offset: {
+        x: 0,
+        y: 38
     }
 });
 
@@ -73,7 +80,7 @@ function animate() {
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
     player.update();
-    enemy.update();
+    // enemy.update();
 
     player.velocity.x = 0;
     enemy.velocity.x = 0;
