@@ -33,7 +33,7 @@ const player = new Fighter({
     framesMax: 11,
     scale: 3,
     offset: {
-        x: 150,
+        x: 215,
         y: 190
     },
     sprites: {
@@ -57,6 +57,14 @@ const player = new Fighter({
             imageSrc: './img/Hero Knight/Sprites/Attack1.png',
             framesMax: 7
         }
+    },
+    attackBox: {
+        offset: {
+            x: 5,
+            y: 25
+        },
+        width: 100,
+        height: 100,
     }
 });
 
@@ -78,7 +86,7 @@ const enemy = new Fighter({
     framesMax: 8,
     scale: 3,
     offset: {
-        x: 280,
+        x: 215,
         y: 335
     },
     sprites: {
@@ -102,6 +110,14 @@ const enemy = new Fighter({
             imageSrc: './img/EVil Wizard 2/Sprites/Attack1.png',
             framesMax: 8
         }
+    },
+    attackBox: {
+        offset: {
+            x: -170,
+            y: -140
+        },
+        width: 120,
+        height: 210,
     }
 });
 
@@ -177,11 +193,16 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) &&
-        player.isAttacking
+        player.isAttacking && player.framesCurrent === 4
     ) {
         player.isAttacking = false;
         enemy.health -= 10;
         document.querySelector('#enemyHealth').style.width = enemy.health + '%';
+    }
+
+    // if player misses
+    if (player.isAttacking && player.framesCurrent === 4) {
+        player.isAttacking = false;
     }
 
     if (
@@ -189,11 +210,15 @@ function animate() {
             rectangle1: enemy,
             rectangle2: player
         }) &&
-            enemy.isAttacking
+            enemy.isAttacking && enemy.framesCurrent === 4
         ) {
             enemy.isAttacking = false;
             player.health -= 10;
             document.querySelector('#playerHealth').style.width = player.health + '%';
+        }
+
+        if (enemy.isAttacking && enemy.framesCurrent === 4) {
+            enemy.isAttacking = false;
         }
 
     // end game based on health
