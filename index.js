@@ -29,40 +29,40 @@ const player = new Fighter({
         x: 0,
         y: 0
     },
-    imageSrc: './img/crow/crow_idle.png',
-    framesMax: 4,
-    scale: 6,
+    imageSrc: './img/Hero Knight/Sprites/Idle.png',
+    framesMax: 11,
+    scale: 3,
     offset: {
-        x: 10,
-        y: 130
+        x: 150,
+        y: 190
     },
     sprites: {
         idle: {
-            imageSrc: './img/crow/crow_idle.png',
-            framesMax: 4
+            imageSrc: './img/Hero Knight/Sprites/Idle.png',
+            framesMax: 11
         },
         run: {
-            imageSrc: './img/crow/crow_walk.png',
-            framesMax: 4,
+            imageSrc: './img/Hero Knight/Sprites/Run.png',
+            framesMax: 8,
         },
         jump: {
-            imageSrc: './img/crow/crow_jump.png',
-            framesMax: 2,
+            imageSrc: './img/Hero Knight/Sprites/Jump.png',
+            framesMax: 3,
         },
         fall: {
-            imageSrc: './img/crow/crow_fall.png',
-            framesMax: 4,
+            imageSrc: './img/Hero Knight/Sprites/Fall.png',
+            framesMax: 3,
         },
         attack: {
-            imageSrc: './img/crow/crow_attack.png',
-            framesMax: 5
+            imageSrc: './img/Hero Knight/Sprites/Attack1.png',
+            framesMax: 7
         }
     }
 });
 
 const enemy = new Fighter({
     position: {
-        x: 400,
+        x: 790,
         y: 100
     },
     velocity: {
@@ -73,6 +73,35 @@ const enemy = new Fighter({
     offset: {
         x: -50,
         y: 0
+    },
+    imageSrc: './img/EVil Wizard 2/Sprites/Idle.png',
+    framesMax: 8,
+    scale: 3,
+    offset: {
+        x: 280,
+        y: 335
+    },
+    sprites: {
+        idle: {
+            imageSrc: './img/EVil Wizard 2/Sprites/Idle.png',
+            framesMax: 8
+        },
+        run: {
+            imageSrc: './img/EVil Wizard 2/Sprites/Run.png',
+            framesMax: 8,
+        },
+        jump: {
+            imageSrc: './img/EVil Wizard 2/Sprites/Jump.png',
+            framesMax: 2,
+        },
+        fall: {
+            imageSrc: './img/EVil Wizard 2/Sprites/Fall.png',
+            framesMax: 2,
+        },
+        attack: {
+            imageSrc: './img/EVil Wizard 2/Sprites/Attack1.png',
+            framesMax: 8
+        }
     }
 });
 
@@ -102,7 +131,7 @@ function animate() {
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
     player.update();
-    // enemy.update();
+    enemy.update();
 
     player.velocity.x = 0;
     enemy.velocity.x = 0;
@@ -118,6 +147,7 @@ function animate() {
         player.switchSprite('idle');
     }
 
+    // jumping
     if (player.velocity.y < 0) {
         player.switchSprite('jump')
     } else if (player.velocity.y > 0) {
@@ -127,8 +157,18 @@ function animate() {
     // enemy movement
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
         enemy.velocity.x = -5;
+        enemy.switchSprite('run');
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5;
+        enemy.switchSprite('run');
+    } else {
+        enemy.switchSprite('idle');
+    }
+
+    if (enemy.velocity.y < 0) {
+        enemy.switchSprite('jump')
+    } else if (enemy.velocity.y > 0) {
+        enemy.switchSprite('fall')
     }
 
     // detect for collision
