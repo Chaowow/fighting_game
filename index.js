@@ -53,6 +53,10 @@ const player = new Fighter({
             imageSrc: './img/crow/crow_fall.png',
             framesMax: 4,
         },
+        attack: {
+            imageSrc: './img/crow/crow_attack.png',
+            framesMax: 5
+        }
     }
 });
 
