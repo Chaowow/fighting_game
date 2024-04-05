@@ -22,7 +22,7 @@ You can play the game locally by following the [Installation](#installation) and
 
 1. Clone the repository to your local machine using the following command:
    
-   git clone https://github.com/Chaowow/fighting_game.git
+   git clone git@github.com:Chaowow/fighting_game.git
    
 
 3. Navigate to the project directory:
