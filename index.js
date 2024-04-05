@@ -60,6 +60,10 @@ const player = new Fighter({
         takeHit: {
             imageSrc: './img/Hero Knight/Sprites/Take Hit.png',
             framesMax: 4
+        },
+        death: {
+            imageSrc: './img/Hero Knight/Sprites/Death.png',
+            framesMax: 11
         }
     },
     attackBox: {
@@ -117,6 +121,10 @@ const enemy = new Fighter({
         takeHit: {
             imageSrc: './img/EVil Wizard 2/Sprites/Take hit.png',
             framesMax: 3
+        },
+        death: {
+            imageSrc: './img/EVil Wizard 2/Sprites/Death.png',
+            framesMax: 7
         }
     },
     attackBox: {
@@ -239,6 +247,7 @@ function animate() {
 animate();
 
 window.addEventListener('keydown', (event) => {
+    if (!player.dead) {
     switch (event.key) {
         case 'd':
             keys.d.pressed = true;
@@ -253,8 +262,12 @@ window.addEventListener('keydown', (event) => {
             break
         case ' ':
             player.attack();
-            break
-
+            break  
+        }  
+    }
+    
+    if (!enemy.dead) {
+    switch (event.key) {
         case 'ArrowRight':
             keys.ArrowRight.pressed = true;
             enemy.lastKey = 'ArrowRight';
@@ -268,9 +281,9 @@ window.addEventListener('keydown', (event) => {
             break
         case 'ArrowDown':
             enemy.attack();
-            break    
+            break
+        }
     }
-
 });
 
 window.addEventListener('keyup', (event) => {
