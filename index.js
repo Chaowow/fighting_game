@@ -56,6 +56,10 @@ const player = new Fighter({
         attack: {
             imageSrc: './img/Hero Knight/Sprites/Attack1.png',
             framesMax: 7
+        },
+        takeHit: {
+            imageSrc: './img/Hero Knight/Sprites/Take Hit.png',
+            framesMax: 4
         }
     },
     attackBox: {
@@ -109,6 +113,10 @@ const enemy = new Fighter({
         attack: {
             imageSrc: './img/EVil Wizard 2/Sprites/Attack1.png',
             framesMax: 8
+        },
+        takeHit: {
+            imageSrc: './img/EVil Wizard 2/Sprites/Take hit.png',
+            framesMax: 3
         }
     },
     attackBox: {
@@ -187,7 +195,7 @@ function animate() {
         enemy.switchSprite('fall')
     }
 
-    // detect for collision
+    // detect for collision & enemy takes hit
     if (
         rectangularCollision({
             rectangle1: player,
@@ -195,8 +203,8 @@ function animate() {
         }) &&
         player.isAttacking && player.framesCurrent === 4
     ) {
+        enemy.takeHit()
         player.isAttacking = false;
-        enemy.health -= 10;
         document.querySelector('#enemyHealth').style.width = enemy.health + '%';
     }
 
@@ -205,6 +213,7 @@ function animate() {
         player.isAttacking = false;
     }
 
+    // where player gets hit
     if (
         rectangularCollision({
             rectangle1: enemy,
@@ -212,8 +221,8 @@ function animate() {
         }) &&
             enemy.isAttacking && enemy.framesCurrent === 4
         ) {
+            player.takeHit();
             enemy.isAttacking = false;
-            player.health -= 10;
             document.querySelector('#playerHealth').style.width = player.health + '%';
         }
 
