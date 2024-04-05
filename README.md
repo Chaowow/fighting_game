@@ -6,6 +6,9 @@ This is a simple fighting game developed using JavaScript and HTML5 Canvas, wher
 
 You can play the game locally by following the [Installation](#installation) and [Usage](#usage) instructions below.
 
+![Gameplay Screenshot](https://github.com/Chaowow/fighting_game/blob/main/Screenshot%202024-04-05%20015917.png?raw=true)
+
+
 ## Features
 
 - Player 1 controls the knight.
